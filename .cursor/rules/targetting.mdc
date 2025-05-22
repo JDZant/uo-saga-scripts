@@ -1,0 +1,86 @@
+---
+description: Documentation about targetting
+globs: 
+alwaysApply: false
+---
+Targeting
+Mink80 edited this page on Jun 13, 2024 · 13 revisions
+Overview
+Targeting.Target(Serial)
+Targeting.TargetSelf()
+Targeting.TargetLast()
+Targeting.WaitForTarget(Timeout in Milliseconds)
+Target
+Targeting.Target(Serial)
+Parameters
+Serial: Numeric value of the serial of an entity
+
+Returns
+Boolean: true on success, false on failure
+
+Example
+
+-- Find the mobile
+friendplayer = Mobiles.FindByName('Herald')
+-- If mobile is not found stop the script
+if friendplayer == nil then
+   return
+end
+-- Cast a spell 
+Spells.Cast('Heal')
+-- Wait for target by timeout of 2 seconds and on fail stop the script
+if not Targeting.WaitForTarget(2000) then
+   return
+end
+-- Target friend player
+Targeting.Target(friendplayer.Serial)
+TargetSelf
+Targeting.TargetSelf()
+Returns
+Boolean: true on success, false on failure
+
+Example
+
+-- Cast a spell 
+Spells.Cast('Heal')
+-- Wait for target by timeout of 2 seconds
+if Targeting.WaitForTarget(2000) then
+   Targeting.TargetSelf()
+end
+TargetLast
+Targeting.TargetLast()
+Returns
+Boolean: true on success, false on failure
+
+Example
+
+-- Cast a spell 
+Spells.Cast('Heal')
+-- Wait for target by timeout of 2 seconds
+if Targeting.WaitForTarget(2000) then
+   Targeting.TargetLast()
+end
+WaitForTarget
+Targeting.WaitForTarget(Milliseconds)
+Parameters
+Numeric: Timeout as numeric value in milliseconds
+
+Returns
+Boolean: true on success, false on failure
+
+Example
+
+-- Find the mobile
+friendplayer = Mobiles.FindByName('Herald')
+-- If mobile is not found stop the script
+if friendplayer == nil then
+   return
+end
+-- Cast a spell 
+Spells.Cast('Heal')
+-- Wait for target by timeout of 2 seconds and on fail stop the script
+if not Targeting.WaitForTarget(2000) then
+   return
+end
+-- Target friend player
+Targeting.Target(friendplayer.Serial)

@@ -1,0 +1,34 @@
+---
+description: Documentation about the journal
+globs: 
+alwaysApply: false
+---
+Journal
+3HMonkey edited this page on Jul 9, 2024 · 2 revisions
+Overview
+Journal.Contains('your string to search')
+Journal.Clear()
+Contains
+Journal.Contains('your string to search')
+Parameters
+String: The string you search for in journal
+
+Returns
+Boolean: true on success, false on failure
+
+Example
+
+if Journal.Contains('Maj the weaponsmith') then
+   Messages.Print('found')
+end
+Clear
+Journal.Clear()
+Returns
+Boolean: true on success, false on failure
+
+Example
+
+if Journal.Contains('Maj the weaponsmith') then
+   Messages.Print('found')
+end
+Journal.Clear()

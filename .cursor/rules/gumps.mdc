@@ -1,0 +1,97 @@
+---
+description: Documentation about gumps
+globs: 
+alwaysApply: false
+---
+Gumps
+3HMonkey edited this page on Jun 13, 2024 · 11 revisions
+Overview
+Gumps.GetByText(text)
+Gumps.WaitForGump(gumpSerial, milliseconds)
+Gumps.IsActive(gumpSerial)
+Gumps.PressButton(gumpSerial, buttonId)
+
+GetByText
+Gumps.GetByText(text)
+Parameters
+text: String value of the text to search for in gumps
+
+Returns
+Numeric: the serial of the gump containing the text, or 0 if not found
+
+Example
+
+-- Get the serial of the gump containing the text 'Welcome'
+gumpSerial = Gumps.GetByText('Welcome')
+if gumpSerial ~= 0 then
+    Messages.Print('Gump found with serial: ' .. gumpSerial)
+else
+    Messages.Print('Gump not found')
+end
+WaitForGump
+Gumps.WaitForGump(gumpSerial, milliseconds)
+Parameters
+gumpSerial: Numeric value of the gump serial to wait for
+milliseconds: Numeric value in milliseconds to wait
+
+Returns
+Boolean: true if the gump is found within the time limit, false otherwise
+
+Example
+
+-- Find an item to use
+hammer = Items.FindBySerial(1076881147)
+-- If item is found use it
+if hammer ~= nil then
+	Messages.Print('found')
+	Player.UseObject(hammer.Serial)
+end
+-- Wait maximum 2 seconds for the gump to open
+if Gumps.WaitForGump(2653346093, 2000) then
+	Messages.Print('Gump opened!')
+	Pause(1000)
+        -- Sends a button click to the gump
+	Gumps.PressButton(2653346093, 21)
+end
+IsActive
+Gumps.IsActive(gumpSerial)
+Parameters
+gumpSerial: Numeric value of the gump serial to check
+
+Returns
+Boolean: true if the gump is active, false if not
+
+Example
+
+-- Check if a gump with a specific serial is active
+gumpSerial = 123456
+if Gumps.IsActive(gumpSerial) then
+    Messages.Print('Gump is active')
+else
+    Messages.Print('Gump is not active')
+end
+PressButton
+Gumps.PressButton(gumpSerial, buttonId)
+Parameters
+gumpSerial: Numeric value of the gump serial containing the button
+buttonId: Numeric value of the button to press
+
+Returns
+Boolean: true on success, false on failure
+
+Example
+
+-- Find an item to use
+hammer = Items.FindBySerial(1076881147)
+-- If item is found use it
+if hammer ~= nil then
+	Messages.Print('found')
+	Player.UseObject(hammer.Serial)
+end
+-- Wait maximum 2 seconds for the gump to open
+if Gumps.WaitForGump(2653346093, 2000) then
+	Messages.Print('Gump opened!')
+	Pause(1000)
+        -- Sends a button click to the gump
+	Gumps.PressButton(2653346093, 21)
+end

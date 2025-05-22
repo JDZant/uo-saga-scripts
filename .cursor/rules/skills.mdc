@@ -1,0 +1,30 @@
+---
+description: Documentation about skills
+globs: 
+alwaysApply: false
+---
+Skills
+3HMonkey edited this page on Jul 8, 2024 · 1 revision
+Overview
+Skills.Use(SkillName)
+Skills.GetValue(SkillName)
+Use
+Skills.Use(SkillName)
+Parameters
+String: Name of the skill
+
+Returns
+Boolean: true on success, false on failure
+
+Example
+
+Skills.Use('Hiding')
+GetValue
+Skills.GetValue(SkillName)
+Returns
+Numeric: Value of the skill
+
+Example
+
+skillvalue = Skills.GetValue('Magery') 
+Messages.Print('The current value is: '..skillvalue)

@@ -1,0 +1,45 @@
+---
+description: Hexadecimal id's for ingame items
+globs: 
+alwaysApply: false
+---
+0x0E21 = Bandage
+0x0F0E = Lockpick
+0x0EED = Gold Coin
+0x0F5E = Dagger
+0x0F51 = Scissors
+0x0F43 = Hatchet
+0x0F4B = Pickaxe
+0x0F39 = Shovel
+0x0F45 = Axe
+0x0F47 = Double Axe
+0x0F49 = Battle Axe
+0x0F4D = Two-Handed Axe
+0x0F4F = Large Battle Axe
+0x0F52 = Butcher Knife
+0x0FBB = Wooden Box
+0x0E76 = Key
+0x0E3A = Mortar and Pestle
+0x0E9B = Bottle
+0x0E24 = Cloth
+0x0E1D = Cotton
+0x0E1F = Wool
+0x0F95 = Fishing Pole
+0x0F7A = Spellbook
+0x0F8D = Blank Scroll
+0x0F3F = Skinning Knife
+0x0F60 = Tongs
+0x0F62 = Smith's Hammer
+0x0F9D = Sewing Kit
+0x0F9C = Thread
+0x0F9F = Bolt of Cloth
+0x0F9E = Spool of Thread
+0x0F6D = Backpack
+0x0E75 = Bag
+0x0E76 = Pouch
+0x0E7D = Chest
+0x0E7E = Crate
+0x0E7F = Barrel
+0x0E80 = Basket
+0x0E41 = Fishing Net
+0x0E5E = Lockable Chest
