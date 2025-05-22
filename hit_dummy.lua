@@ -1,7 +1,6 @@
-while true do
-    Player.UseObject('1087420067')
-    Skills.Use('Anatomy')
-    Targeting.WaitForTarget(1000)
-    Targeting.Target(1454078)
-end
+local dummy = '1087420090'
 
+while true do
+    Player.UseObject(dummy)
+    Pause(3000)  -- 2000 milliseconds = 2 seconds
+end

@@ -1,5 +1,71 @@
 ---
-description:
-globs:
+description: 
+globs: 
 alwaysApply: false
 ---
+Messages
+3HMonkey edited this page on Jun 13, 2024 · 4 revisions
+Overview
+Messages.Print(message)
+Messages.Print(message, hue)
+Messages.Print(message, hue, type)
+Messages.Print(message, hue, type, font)
+Messages.Print(message, hue, type, font, unicode)
+Messages.Overhead(message, serial)
+Messages.Overhead(message, hue, serial)
+Print
+Messages.Print(message)
+Messages.Print(message, hue)
+Messages.Print(message, hue, type)
+Messages.Print(message, hue, type, font)
+Messages.Print(message, hue, type, font, unicode)
+Parameters
+message: String value of the message to print
+hue: Optional numeric value for the hue of the message (default is 0)
+type: Optional numeric value representing the message type (default is 0)
+font: Optional numeric value representing the font of the message (default is 0)
+unicode: Optional boolean value indicating if the message is in unicode (default is false)
+
+Returns
+Boolean: true on success, false on failure
+
+Example
+
+-- Print a simple message
+Messages.Print("Hello, world!")
+
+-- Print a message with a specific hue
+Messages.Print("Hello, world!", 34)
+-- Print a message with a specific hue and type
+Messages.Print("Hello, world!", 34, 1)
+
+-- Print a message with a specific hue, type, and font
+Messages.Print("Hello, world!", 34, 1, 3)
+
+-- Print a message with a specific hue, type, font, and unicode
+Messages.Print("Hello, world!", 34, 1, 3, true)
+Overhead
+Messages.Overhead(message, serial)
+Messages.Overhead(message, hue, serial)
+Parameters
+message: String value of the message to display overhead
+serial: Numeric value of the serial of an entity
+hue: Optional numeric value for the hue of the message (default is 0)
+
+Returns
+Boolean: true on success, false on failure
+
+Example
+
+-- Find the mobile
+friendplayer = Mobiles.FindByName('Herald')
+-- If mobile is not found stop the script
+if friendplayer == nil then
+   return
+end
+
+-- Display a message overhead the friend player
+Messages.Overhead("Hello, Herald!", friendplayer.Serial)
+
+-- Display a message with a specific hue overhead the friend player
+Messages.Overhead("Hello, Herald!", 34, friendplayer.Serial)
