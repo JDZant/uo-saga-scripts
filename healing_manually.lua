@@ -8,25 +8,24 @@ end
 
 function UseBandage()
     if bandageInProgress then
-        Player.Say("Bandage already in progress")
+        Messages.Print("Bandage already in progress")
         return false
     end
     
     local bandage = Items.FindByType(0x0E21)
     if bandage then
-        Player.Say("Using bandage")
+        Messages.Print("Using bandage")
         Player.UseObject(bandage.Serial)
         Targeting.WaitForTarget(2000)
         Targeting.TargetSelf()
         
         -- Check for healing messages
         if Journal.Contains("You begin applying the bandages.") then
-            Player.Say("Healing started")
+            Messages.Print("Healing started")
             bandageInProgress = true
         end
         
         if Journal.Contains("You finish applying the bandages.") then
-            Player.Say("Healing completed")  
             bandageInProgress = false
             Journal.Clear()
         end

@@ -1,8 +1,7 @@
 -- Configuration
 local MAX_WEIGHT_DIFF = 10
-local MAX_WEIGHT = 306
+local MAX_WEIGHT = 390
 local ITEM_ID_WOODEN_LOGS = 0x1BDD -- For log identification
-local STUMP_GRAPHICS = {0x0CCA, 0x0CCB, 0x0CCC, 0x0CCD, 0x0CCE, 0x0CCF, 0x0CD0, 0x0CD1, 0x0CD2, 0x0CD3, 0x0CD4, 0x0CD5, 0x0CD6, 0x0CD7, 0x0CD8, 0x0CD9, 0x0CDA, 0x0CDB, 0x0CDC, 0x0CDD, 0x0CDE, 0x0CDF, 0x0CE0, 0x0CE1, 0x0CE2, 0x0CE3, 0x0CE4, 0x0CE5, 0x0CE6, 0x0CE7, 0x0CE8, 0x0CE9, 0x0CEA, 0x0CEB, 0x0CEC, 0x0CED, 0x0CEE, 0x0CEF, 0x0CF0, 0x0CF1, 0x0CF2, 0x0CF3, 0x0CF4, 0x0CF5, 0x0CF6, 0x0CF7, 0x0CF8, 0x0CF9, 0x0CFA, 0x0CFB, 0x0CFC, 0x0CFD, 0x0CFE, 0x0CFF}
 
 function GetHatchet()
     local axe = nil
@@ -98,17 +97,8 @@ function ChopTree(hatchetSerial)
     return false
 end
 
-function ScanForTrees(range)
-    Player.Say("Scanning for stumps...")
-    local filter = {onground=true, rangemax=range or 10, graphics=STUMP_GRAPHICS}
-    local trees = Items.FindByFilter(filter)
-    return trees or {}
-end
-
 function Main()
     Journal.Clear()
-    local trees = ScanForTrees(10)
-    print(trees)
     local needNewTree = true
 
     while true do
@@ -119,9 +109,10 @@ function Main()
         end
 
         if Player.Weight > MAX_WEIGHT - MAX_WEIGHT_DIFF then
+            Player.Say("This shit is getting heavy...")
             CreateBoards(hatchet)
             if Player.Weight > MAX_WEIGHT - MAX_WEIGHT_DIFF then
-                Player.Say("To heavy")
+                Player.Say("Still too heavy, stopping.")
                 return
             end
             needNewTree = true

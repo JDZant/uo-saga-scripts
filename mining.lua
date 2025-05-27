@@ -1,146 +1,91 @@
--- Continuous Mining Script for UO
-function oreProcessin()
-    local itemIdSmallOrePile = {0x19B9, 0x19B8, 0x19BA, 0x19B7}
-    
-    local itemList1 = Items.FindByFilter({})
-    for index, item1 in ipairs(itemList1) do
-        if item1 ~= nil then
-            if item1.RootContainer ~= Player.Serial then
-                goto continue
-            end
-            
-            if item1.Graphic == itemIdSmallOrePile[1]
-            or item1.Graphic == itemIdSmallOrePile[2] 
-            or item1.Graphic == itemIdSmallOrePile[3] then
+local toolGraphic = 0x0E86 -- Tool identifier
+local action = true -- Variable to control execution
+Journal.Clear()
 
-                Messages.Overhead("Large pile found...", Player.Serial)
+-- Error messages to watch for in the journal
+local errorMessages = {
+    "There is no metal here to mine.",
+    "That is too far away.",
+    "You can't mine that.",
+    "You can't mine there",
+    "Target cannot be seen."
+}
 
-                local itemList2 = Items.FindByFilter({})
-                for index, item2 in ipairs(itemList2) do
-                    if item2 ~= nil then
-                        if item2.RootContainer ~= Player.Serial then
-                            goto continue
-                        end
-
-                        if item1.Hue ~= item2.Hue then
-                            goto continue
-                        end
-                
-                        if item2.Graphic == itemIdSmallOrePile[4] then
-                            Player.UseObject(item1.Serial)
-                            if Targeting.WaitForTarget(1000) then
-                                Messages.Overhead("Combining...", Player.Serial)
-                                Targeting.Target(item2.Serial)
-                                Pause(750)
-                                break
-                            end
-                        end
-
-                        ::continue::
-                    end
-                end
-            end
-
-            ::continue::
+-- Function to check if a stop message is present in the journal
+function checkJournal()
+    for _, msg in ipairs(errorMessages) do
+        if Journal.Contains(msg) then
+            return true, msg -- Returns true and the found message
         end
+    end
+    return false, nil
+end
+
+-- Function to check and equip a tool if necessary
+function ensureTool()
+    local toolEquiped = Items.FindByLayer(1) -- Check if a tool is equipped in the hand (layer 1)
+    
+    -- If no tool is equipped, search for a tool in the bag
+    if not toolEquiped then
+        local toolInBag = Items.FindByType(toolGraphic)
+
+        if toolInBag then
+            -- If a tool is found in the bag, equip it
+            Player.Equip(toolInBag.Serial)
+            Messages.Overhead("New Tool equipped", 14, Player.Serial)
+            Pause(1000)
+            return true
+        else
+            -- No tool found, display a message and stop the script
+            Messages.Overhead("No tool", 38, Player.Serial)
+            return false
+        end
+    end
+    return true
+end
+
+-- Main function
+function main()
+    -- Continuous check, as long as no error is found
+    while action do
+        -- Check if a tool is available and equipped
+        if not ensureTool() then
+            action = false
+            break
+        end
+
+        local toolEquiped = Items.FindByLayer(1) -- Check if the tool is still equipped in the hand
+
+        -- Execute the main action: use the tool and target the last target
+        if toolEquiped then
+            Player.UseObject(toolEquiped.Serial)
+            Pause(1000) -- Wait a second between actions
+            Targeting.TargetLast()
+        end
+
+        -- Check the journal for specific messages
+        local hasError, foundMessage = checkJournal()
+        if hasError then
+            -- If the error message is "There is no metal here to mine", display a specific message
+            if foundMessage == "There is no metal here to mine." then
+                Messages.Overhead("No ore", 73, Player.Serial)
+            end
+            -- debug
+            -- Messages.Overhead(foundMessage, 38, Player.Serial)
+            action = false
+            break
+        end
+
+        -- Clear the journal after each check to avoid duplicates
+        Journal.Clear()
+
+        -- Wait a second before the next iteration
+        -- Pause(200)
     end
 end
 
-function Main()
-    -- Finding Pickaxe - check multiple equipment layers
-    local axe = nil
-    -- Check common equipment layers (1=right hand, 2=left hand)
-    for _, layer in ipairs({1, 2}) do
-        local checkAxe = Items.FindByLayer(layer)
-        if checkAxe and string.find(string.lower(checkAxe.Name or ""), "pickaxe") then
-            axe = checkAxe
-            break
-        end
-    end
 
-    local equipaxe = Items.FindByName('Pickaxe')
-    
-
-    -- Equip Pickaxe if needed
-    if axe == nil and equipaxe ~= nil then
-        Player.Equip(equipaxe.Serial)
-        Pause(1000)  -- Wait for equip to complete
-        
-        -- Check multiple layers again after equipping
-        for _, layer in ipairs({1, 2}) do
-            local checkAxe = Items.FindByLayer(layer)
-            if checkAxe and string.find(string.lower(checkAxe.Name or ""), "pickaxe") then
-                axe = checkAxe
-                break
-            end
-        end
-    end
-        -- Make sure we have a pickaxe before continuing
-        if axe == nil then
-            Player.Say("I need to equip the Pickaxe")
-            return
-        end
-        
-        Journal.Clear()
-        
-        -- Main mining loop - no skill level check
-        while true do
-            -- Check weight before continuing
-            if Player.Weight > 500 then
-                Player.Say("This ore is getting heavy...")
-                return  -- Exit script to handle banking
-            end
-            
-            -- Use the pickaxe
-            Player.UseObject(axe.Serial)
-            
-            -- Target a mining spot
-            if Targeting.WaitForTarget(1000) then
-                Targeting.TargetLast()
-            end
-            
-            -- Wait for mining to complete
-            Pause(1500)  -- Mining typically takes longer than 1500ms
-            
-            -- Check for journal messages
-            if Journal.Contains('There is no metal here to mine.') then
-                Player.Say("No more ore! Move to new spot!")
-                Journal.Clear()
-            end
-            
-            -- Check weight, and process ore if over 390
-            if Player.Weight >= 390 then
-                oreProcessin()
-            end
-    
-            -- Check for equipment issues
-            if Journal.Contains('Error in function') then
-                Player.Say("Having equipment issues, trying to re-equip")
-                if equipaxe ~= nil then
-                    Player.Equip(equipaxe.Serial)
-                    Pause(1000)
-                    
-                    -- Check multiple layers again after re-equipping
-                    axe = nil
-                    for _, layer in ipairs({1, 2}) do
-                        local checkAxe = Items.FindByLayer(layer)
-                        if checkAxe and string.find(string.lower(checkAxe.Name or ""), "Pickaxe") then
-                            axe = checkAxe
-                            break
-                        end
-                    end
-                    
-                    if axe == nil then
-                        Player.Say("Failed to equip pickaxe properly")
-                        return
-                    end
-                else
-                    Player.Say("Cannot find Pickaxe in backpack")
-                    return
-                end
-                Journal.Clear()
-            end
-        end
-    end
-    
-    Main()
+while action do
+    main()
+    -- Pause(200) -- Wait a second between iterations of the main loop
+end
