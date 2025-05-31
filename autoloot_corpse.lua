@@ -1,8 +1,3 @@
---========= Autoloot Corpse ========--
--- Author: Gemini
--- Description: Finds and loots specified items from corpses.
---======================================--
-
 -- Configuration
 local ITEMS_TO_LOOT = {
     {name = "Gold", id = 0x0EED},
