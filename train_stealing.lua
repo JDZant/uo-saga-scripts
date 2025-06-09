@@ -1,6 +1,6 @@
 -- CONFIG
-floorBag = 1125490867       -- Ground bag (outer)
-itemToSteal = 1125492584    -- Specific item being stolen and returned
+floorBag = 1130329349       -- Ground bag (outer)
+itemToSteal = 1126911299    -- Specific item being stolen and returned
 backpack = 1113633156       -- Your backpack
 
 while true do
