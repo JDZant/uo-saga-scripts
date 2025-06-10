@@ -41,7 +41,7 @@ end
 
 while Skills.GetValue('Magery') < 100 do
     Pause(50)
-    if Player.Mana <= 10 or Journal.Contains('insufficient mana') then
+    if Player.Mana == 0 or Journal.Contains('insufficient mana') then
         Meditate()
     end
 
