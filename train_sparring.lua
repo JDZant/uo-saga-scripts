@@ -3,6 +3,8 @@
 -- Server: UO Sagas
 -- Description: Trains combat skills by attacking a sparring partner (target) and healing them with bandages.
 --              Automatically equips a butcher knife and manages bandages.
+--              Set target serial to heal and attack.
+--              Set bandage serial to use for healing.
 --==========================================--
 
 local target = 1648799
