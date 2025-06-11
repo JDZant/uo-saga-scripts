@@ -1,0 +1,202 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+local ItemTypes = {
+    Shields = {
+        { ItemType = 0x1b72, Name = "BronzeShields" },
+        { ItemType = 0x1b73, Name = "Buckler" },
+        { ItemType = 0x1b7b, Name = "MetalShield" },
+        { ItemType = 0x1b74, Name = "Metal Kite Shield" },
+        { ItemType = 0x1b79, Name = "Tear Kite Shield" },
+        { ItemType = 0x1b7a, Name = "WoodenShield" },
+        { ItemType = 0x1b76, Name = "HeaterShield" }
+    },
+    BoneArmor = {
+        { ItemType = 0x1451, Name = "Bone Helmet" },
+        { ItemType = 0x144f, Name = "Bone Armor" },
+        { ItemType = 0x1452, Name = "Bone Leggings" },
+        { ItemType = 0x144e, Name = "Bone Arms" },
+        { ItemType = 0x1450, Name = "Bone Gloves" }
+    },
+    Platemail = {
+        { ItemType = 0x1408, Name = "Close Helmet" },
+        { ItemType = 0x1410, Name = "Platemail Arms" },
+        { ItemType = 0x1411, Name = "Platemail Legs" },
+        { ItemType = 0x1412, Name = "Plate Helm" },
+        { ItemType = 0x1413, Name = "Plate Gorget" },
+        { ItemType = 0x1414, Name = "Platemail Gloves" },
+        { ItemType = 0x1415, Name = "Plate Chest" },
+        { ItemType = 0x140a, Name = "Helmet" },
+        { ItemType = 0x140c, Name = "Bascinet" },
+        { ItemType = 0x140e, Name = "Norse Helm" }
+    },
+    Chainmail = {
+        { ItemType = 0x13bb, Name = "Chainmail Coif" },
+        { ItemType = 0x13be, Name = "Chainmail Leggins" },
+        { ItemType = 0x13bf, Name = "Chainmail Tunic" }
+    },
+    Ringmail = {
+        { ItemType = 0x13ee, Name = "Ringmail Sleeves" },
+        { ItemType = 0x13eb, Name = "Ringmail Gloves" },
+        { ItemType = 0x13ec, Name = "Ringmail Tunic" },
+        { ItemType = 0x13f0, Name = "Ringmail Leggins" }
+    },
+    Studded = {
+        { ItemType = 0x13da, Name = "Studded Leggings" },
+        { ItemType = 0x13db, Name = "Studded Tunic" },
+        { ItemType = 0x13d5, Name = "Studded Gloves" },
+        { ItemType = 0x13d6, Name = "Studded Gorget" },
+        { ItemType = 0x13dc, Name = "Studded Sleeves" }
+    },
+    Leather = {
+        { ItemType = 0x13c6, Name = "Leather Gloves" },
+        { ItemType = 0x13cd, Name = "Leather Sleeves" },
+        { ItemType = 0x13cc, Name = "Leather Tunic" },
+        { ItemType = 0x13cb, Name = "Leather Pants" },
+        { ItemType = 0x13c7, Name = "Leather Gorget" },
+        { ItemType = 0x1db9, Name = "Leather Cap" }
+    },
+    FemaleArmor = {
+        { ItemType = 0x1c04, Name = "Female Plate" },
+        { ItemType = 0x1c0c, Name = "Female Studded Bustier" },
+        { ItemType = 0x1c02, Name = "Female Studded Armor" },
+        { ItemType = 0x1c00, Name = "Female Leather Shorts" },
+        { ItemType = 0x1c08, Name = "Female Leather Skirt" },
+        { ItemType = 0x1c06, Name = "Female Leather Armor" },
+        { ItemType = 0x1c0a, Name = "Female Leather Bustier" }
+    },
+    Fencing = {
+        { ItemType = 0x0f62, Name = "Spear" },
+        { ItemType = 0x1403, Name = "Short Spear" },
+        { ItemType = 0x0e87, Name = "Pitchfork" },
+        { ItemType = 0x1405, Name = "Warfork" },
+        { ItemType = 0x1401, Name = "Kryss" },
+        { ItemType = 0x0f52, Name = "Dagger" }
+    },
+    Macing = {
+        { ItemType = 0x13b0, Name = "War axe" },
+        { ItemType = 0x0df0, Name = "Black Staff" },
+        { ItemType = 0x1439, Name = "War Hammer" },
+        { ItemType = 0x1407, Name = "War Mace" },
+        { ItemType = 0x0e89, Name = "Quarter Staff" },
+        { ItemType = 0x143d, Name = "Hammer Pick" },
+        { ItemType = 0x13b4, Name = "Club" },
+        { ItemType = 0x0e81, Name = "Shepherds Crook" },
+        { ItemType = 0x13f8, Name = "Gnarled Staff" },
+        { ItemType = 0x0f5c, Name = "Mace" },
+        { ItemType = 0x143b, Name = "Maul" }
+    },
+    Swords = {
+        { ItemType = 0x13b9, Name = "Viking Sword" },
+        { ItemType = 0x0f61, Name = "Longsword" },
+        { ItemType = 0x1441, Name = "Cutlass" },
+        { ItemType = 0x13b6, Name = "Scimitar" },
+        { ItemType = 0x0ec4, Name = "Skinning Knife" },
+        { ItemType = 0x13f6, Name = "Butcher Knife" },
+        { ItemType = 0x0f5e, Name = "Broadsword" },
+        { ItemType = 0x13ff, Name = "Katana" },
+        { ItemType = 0x0ec3, Name = "Cleaver" }
+    },
+    Axes = {
+        { ItemType = 0x0f43, Name = "Hatchet" },
+        { ItemType = 0x0f45, Name = "Executioner's Axe" },
+        { ItemType = 0x0f4d, Name = "Bardiche" },
+        { ItemType = 0x0f4b, Name = "Double Axe" },
+        { ItemType = 0x143e, Name = "Halberd" },
+        { ItemType = 0x13fb, Name = "Large Battle Axe" },
+        { ItemType = 0x1443, Name = "Two Handed Axe" },
+        { ItemType = 0x0f47, Name = "Battle Axe" },
+        { ItemType = 0x0f49, Name = "Axe" },
+        { ItemType = 0x0e85, Name = "Pickaxe" },
+        { ItemType = 0x0e86, Name = "Pickaxe" }
+    },
+    Bows = {
+        { ItemType = 0x13fd, Name = "HeavyXbow" },
+        { ItemType = 0x0f50, Name = "Xbow" },
+        { ItemType = 0x13b2, Name = "bow" }
+    },
+    Reagents = {
+        { ItemType = 0x0f7a, Name = "Black Pearl" },
+        { ItemType = 0x0f7b, Name = "Blood Moss" },
+        { ItemType = 0x0f86, Name = "Mandrake Root" },
+        { ItemType = 0x0f84, Name = "Garlic" },
+        { ItemType = 0x0f85, Name = "Ginseng" },
+        { ItemType = 0x0f88, Name = "Nightshade" },
+        { ItemType = 0x0f8d, Name = "Spider's Silk" },
+        { ItemType = 0x0f8c, Name = "Sulphurous Ash" }
+    },
+    Supplies = {
+        { ItemType = 0x1bfb, Name = "Bolt" },
+        { ItemType = 0x0f3f, Name = "Arrow" },
+        { ItemType = 0x14fc, Name = "Lockpick" },
+        { ItemType = 0x0e21, Name = "Bandage" }
+    },
+    SpellScrolls = {
+        { ItemType = 0x1f2d, Name = "Reactive Armor" },
+        { ItemType = 0x1f2e, Name = "Clumsy" },
+        { ItemType = 0x1f2f, Name = "Create Food" },
+        { ItemType = 0x1f30, Name = "Feeblemind" },
+        { ItemType = 0x1f31, Name = "Heal" },
+        { ItemType = 0x1f32, Name = "Magic Arrow" },
+        { ItemType = 0x1f33, Name = "Night Sight" },
+        { ItemType = 0x1f34, Name = "Weaken" },
+        { ItemType = 0x1f35, Name = "Agility" },
+        { ItemType = 0x1f36, Name = "Cunning" },
+        { ItemType = 0x1f37, Name = "Cure" },
+        { ItemType = 0x1f38, Name = "Harm" },
+        { ItemType = 0x1f39, Name = "Magic Trap" },
+        { ItemType = 0x1f3a, Name = "Magic Untrap" },
+        { ItemType = 0x1f3b, Name = "Protection" },
+        { ItemType = 0x1f3c, Name = "Strength" },
+        { ItemType = 0x1f3d, Name = "Bless" },
+        { ItemType = 0x1f3e, Name = "Fireball" },
+        { ItemType = 0x1f3f, Name = "Magic Lock" },
+        { ItemType = 0x1f40, Name = "Poison" },
+        { ItemType = 0x1f41, Name = "Telekinesis" },
+        { ItemType = 0x1f42, Name = "Teleport" },
+        { ItemType = 0x1f43, Name = "Unlock" },
+        { ItemType = 0x1f44, Name = "Wall of Stone" },
+        { ItemType = 0x1f45, Name = "Arch Cure" },
+        { ItemType = 0x1f46, Name = "Arch Protection" },
+        { ItemType = 0x1f47, Name = "Curse" },
+        { ItemType = 0x1f48, Name = "Fire Field" },
+        { ItemType = 0x1f49, Name = "Greater Heal" },
+        { ItemType = 0x1f4a, Name = "Lightning" },
+        { ItemType = 0x1f4b, Name = "Mana Drain" },
+        { ItemType = 0x1f4d, Name = "Blade Spirit" },
+        { ItemType = 0x1f4e, Name = "Dispel Field" },
+        { ItemType = 0x1f4f, Name = "Incognito" },
+        { ItemType = 0x1f50, Name = "Magic Reflection" },
+        { ItemType = 0x1f51, Name = "Mind Blast" },
+        { ItemType = 0x1f52, Name = "Paralyze" },
+        { ItemType = 0x1f53, Name = "Poison Field" },
+        { ItemType = 0x1f54, Name = "Summon Creature" },
+        { ItemType = 0x1f55, Name = "Dispel" },
+        { ItemType = 0x1f56, Name = "Energy Bolt" },
+        { ItemType = 0x1f57, Name = "Explosion" },
+        { ItemType = 0x1f58, Name = "Invisibility" },
+        { ItemType = 0x1f59, Name = "Mark" },
+        { ItemType = 0x1f5a, Name = "Mass Curse" },
+        { ItemType = 0x1f5b, Name = "Paralyze Field" },
+        { ItemType = 0x1f5c, Name = "Reveal" },
+        { ItemType = 0x1f5d, Name = "Chain Lightning" },
+        { ItemType = 0x1f5e, Name = "Energy Field" },
+        { ItemType = 0x1f5f, Name = "Flamestrike" },
+        { ItemType = 0x1f60, Name = "Gate Travel" },
+        { ItemType = 0x1f61, Name = "Mana Vampire" },
+        { ItemType = 0x1f62, Name = "Mass Dispel" },
+        { ItemType = 0x1f63, Name = "Meteor Swarm" },
+        { ItemType = 0x1f64, Name = "Polymorph" },
+        { ItemType = 0x1f65, Name = "Earthquake" },
+        { ItemType = 0x1f66, Name = "Energy Vortex" },
+        { ItemType = 0x1f67, Name = "Ressurrection" },
+        { ItemType = 0x1f68, Name = "Summon Air Elemental" },
+        { ItemType = 0x1f69, Name = "Summon Daemon" },
+        { ItemType = 0x1f6a, Name = "Summon Earth Elemental" },
+        { ItemType = 0x1f6b, Name = "Summon Fire Elemental" },
+        { ItemType = 0x1f6c, Name = "Summon Water Elemental" }
+    }
+}
+return ItemTypes

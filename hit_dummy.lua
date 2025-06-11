@@ -1,7 +1,7 @@
 while true do
-    Player.UseObject('1087420067')
-    Skills.Use('Anatomy')
-    Targeting.WaitForTarget(1000)
-    Targeting.Target(1454078)
+	Skills.Use('Hiding')
+	Player.UseObject('1087420091')
+	Pause(5000)
+	Player.UseObject('1087420091')
+	Pause(5000)
 end
-
