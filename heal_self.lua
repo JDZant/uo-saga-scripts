@@ -4,4 +4,4 @@ if bandage then
     Targeting.WaitForTarget(2000)
     Targeting.TargetSelf()
     return true
-end 
+end
