@@ -5,20 +5,25 @@
 --              Automatically equips a butcher knife and manages bandages.
 --              Set target serial to heal and attack.
 --              Set bandage serial to use for healing.
+--              TODO: Add functionality to replace shield and armor when damaged.
+--              TODO: Check if target needs healing before calling HealTarget.
 --==========================================--
 
 local target = 1648799
 local bandage = 1124101655
 local layers = {1, 2}
 
-function GetKnife()
-    Messages.Print('Getting butcher knife')
-    return Items.FindByName('Butcher Knife')
+-- Change this to the item you want to use
+local itemString = 'Butcher Knife'
+
+function GetItem()
+    Messages.Print('Getting item')
+    return Items.FindByName(itemString)
 end
 
-function EquipKnife(knife)
-    Messages.Print('Equipping knife')
-    Player.Equip(knife.Serial)
+function EquipItem(item)
+    Messages.Print('Equipping item')
+    Player.Equip(item.Serial)
     Pause(1000)
 end
 
@@ -36,34 +41,34 @@ function HealTarget()
     Pause(10000)
 end
 
-function CheckForKnife()
-    Messages.Print('Checking for knife')
-    local knife = nil
-    -- Check for equipped knife in right and left hand
+function CheckForItem()
+    Messages.Print('Checking for item')
+    local item = nil
+    -- Check for equipped item in right and left hand
     for _, layer in ipairs(layers) do
-        local checkKnife = Items.FindByLayer(layer)
-        if checkKnife and string.find(string.lower(checkKnife.Name or ""), "butcher knife") then
-            knife = checkKnife
+        local checkItem = Items.FindByLayer(layer)
+        if checkItem and string.find(string.lower(checkItem.Name or ""), itemString) then
+            item = checkItem
             break
         end
     end
 
-    -- If no knife is equipped, get one and equip it
-    if not knife then
-        knife = GetKnife()
-        if knife then
-            EquipKnife(knife)
+    -- If no item is equipped, get one and equip it
+    if not item then
+        item = GetItem()
+        if item then
+            EquipItem(item)
         end
     end
 
-    return knife
+    return item
 end
 
 function Main()
     Messages.Print('Starting main loop')
     while true do
-        local knife = CheckForKnife()
-        if knife then
+        local item = CheckForItem()
+        if item then
             AttackTarget()
         end
         -- TODO: Check if target needs healing before calling HealTarget
