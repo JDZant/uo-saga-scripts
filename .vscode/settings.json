@@ -1,5 +1,14 @@
 {
     "Lua.diagnostics.globals": [
-        "Targeting"
+        "Targeting",
+        "Messages",
+        "Pause",
+        "Player",
+        "Items",
+        "Skills",
+        "Targeting",
+        "Targeting.WaitForTarget",
+        "Targeting.Target",
+        "Spells"
     ]
 }
