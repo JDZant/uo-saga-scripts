@@ -9,6 +9,7 @@
         "Targeting",
         "Targeting.WaitForTarget",
         "Targeting.Target",
-        "Spells"
+        "Spells",
+        "Journal",
     ]
 }

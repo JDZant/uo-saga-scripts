@@ -1,5 +1,13 @@
+--========= Sparring Trainer ========--
+-- Author: aKKa
+-- Server: UO Sagas
+-- Description: Trains combat skills by attacking a sparring partner (target) and healing them with bandages.
+--              Automatically equips a butcher knife and manages bandages.
+--==========================================--
+
 local target = 1648799
 local bandage = 1124101655
+local layers = {1, 2}
 
 function GetKnife()
     Messages.Print('Getting butcher knife')
@@ -30,7 +38,7 @@ function CheckForKnife()
     Messages.Print('Checking for knife')
     local knife = nil
     -- Check for equipped knife in right and left hand
-    for _, layer in ipairs({1, 2}) do
+    for _, layer in ipairs(layers) do
         local checkKnife = Items.FindByLayer(layer)
         if checkKnife and string.find(string.lower(checkKnife.Name or ""), "butcher knife") then
             knife = checkKnife
@@ -56,6 +64,7 @@ function Main()
         if knife then
             AttackTarget()
         end
+        -- TODO: Check if target needs healing before calling HealTarget
         HealTarget()
     end
 end
