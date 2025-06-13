@@ -1,6 +1,6 @@
 -- CONFIG
 floorBag = 1130329349       -- Ground bag (outer)
-itemToSteal = 1126911299    -- Specific item being stolen and returned
+itemToSteal = 1113633163    -- Specific item being stolen and returned
 backpack = 1113633156       -- Your backpack
 
 -- Function to determine the result of the steal attempt from the journal.
