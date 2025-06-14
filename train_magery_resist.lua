@@ -6,7 +6,8 @@
 --==========================================--
 
 local magerySpells = {
-    { min = 70, spell = 'FlameStrike' },
+    { min = 90, spell = 'FlameStrike' },
+    { min = 70, spell = 'EnergyBolt' },
     { min = 50, spell = 'ManaDrain' },
     { min = 40, spell = 'Fireball' },
     { min = 0,  spell = 'Cure' }
@@ -68,7 +69,7 @@ end
 -- Continues until Magery skill reaches 100.
 while Skills.GetValue('Magery') or Skills.GetValue('Resist') < 100 do
     Pause(50)
-    if Player.Mana <= 40 or Journal.Contains('insufficient mana') then
+    if Player.Mana <= 20 or Journal.Contains('insufficient mana') then
         Meditate()
     end
 
