@@ -3,7 +3,7 @@ A repository for Ultima Online Saga's Lua scripts
 ## Description
 This repository contains a collection of Lua scripts for Ultima Online Saga. These scripts are designed to automate various tasks and enhance gameplay.
 
-**Note:** While these scripts are functional, they may not work perfectly in all situations. Feel free to improve them as needed.
+**Note:** While these most of these scripts are functional, they may not work perfectly in all situations. Feel free to improve them as needed.
 
 ## Scripts
 
