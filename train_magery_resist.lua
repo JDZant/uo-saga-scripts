@@ -6,7 +6,7 @@
 --==========================================--
 
 local magerySpells = {
-    { min = 70, spell = 'EnergyBolt' },
+    { min = 70, spell = 'FlameStrike' },
     { min = 50, spell = 'ManaDrain' },
     { min = 40, spell = 'Fireball' },
     { min = 0,  spell = 'Cure' }
@@ -25,7 +25,7 @@ function Meditate()
     while Player.Mana < Player.MaxMana do
         Journal.Clear()
         Skills.Use('Meditation')
-        Pause(3000)
+        Pause(10000)
         for _, message in ipairs(meditationMessages) do
             if Journal.Contains(message.value) then
                 if message.value == 'You are at peace' then
@@ -68,11 +68,11 @@ end
 -- Continues until Magery skill reaches 100.
 while Skills.GetValue('Magery') or Skills.GetValue('Resist') < 100 do
     Pause(50)
-    if Player.Mana <= 20 or Journal.Contains('insufficient mana') then
+    if Player.Mana <= 40 or Journal.Contains('insufficient mana') then
         Meditate()
     end
 
-    if Player.Hits < 40 then
+    if Player.Hits < 60 then
         HealSelf()
     else
         currentMagery = Skills.GetValue('Magery')
