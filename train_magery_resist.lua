@@ -6,7 +6,7 @@
 --==========================================--
 
 local magerySpells = {
-    { min = 90, spell = 'FlameStrike' },
+    { min = 86, spell = 'FlameStrike' },
     { min = 70, spell = 'EnergyBolt' },
     { min = 50, spell = 'ManaDrain' },
     { min = 40, spell = 'Fireball' },
@@ -43,7 +43,8 @@ end
 -- Determines which healing spell to use based on missing health.
 -- @return {string} 'GreaterHeal' if more than 10 HP is missing, otherwise 'Heal'.
 function GetHealingSpellString()
-    if Player.HitsMax - Player.Hits <= 20 then
+    if Player.HitsMax - Player.Hits <= 10 then
+        Messages.Print(Player.HitsMax - Player.Hits <= 10)
         return 'Heal'
     else
         return 'GreaterHeal'
@@ -54,7 +55,7 @@ end
 -- It will meditate if mana is low, then cast the appropriate healing spell on the player.
 function HealSelf()
     while Player.Hits < Player.HitsMax do
-        if(Player.Mana < 20) then 
+        if(Player.Mana <= 20) then 
             Meditate()
         end
         Spells.Cast(GetHealingSpellString())
@@ -69,12 +70,14 @@ end
 -- Continues until Magery skill reaches 100.
 while Skills.GetValue('Magery') or Skills.GetValue('Resist') < 100 do
     Pause(50)
-    if Player.Mana <= 20 or Journal.Contains('insufficient mana') then
+    if Player.Mana <= 40 or Journal.Contains('insufficient mana') then
         Meditate()
     end
 
-    if Player.Hits < 60 then
+    if Player.Hits <= 40 then
         HealSelf()
+        Pause(1000)
+        Meditate()
     else
         currentMagery = Skills.GetValue('Magery')
         for _, data in ipairs(magerySpells) do
