@@ -79,7 +79,7 @@ while Skills.GetValue('Magery') or Skills.GetValue('Resist') < 100 do
         Pause(1000)
         Meditate()
     else
-        currentMagery = Skills.GetValue('Magery')
+        local currentMagery = Skills.GetValue('Magery')
         for _, data in ipairs(magerySpells) do
             if currentMagery >= data.min then
                 Spells.Cast(data.spell)
@@ -91,5 +91,13 @@ while Skills.GetValue('Magery') or Skills.GetValue('Resist') < 100 do
             Targeting.Target(Player.Serial)
             Pause(800)
         end
+    end
+end
+
+while true do
+    if Journal.Contains('is attacking you!') then
+        Player.Say('Guards!')
+    else
+        Pause(1000)
     end
 end
