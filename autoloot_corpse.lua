@@ -5,6 +5,14 @@
 -- Dependencies: None
 --======================================--
 
+-- Configuration
+local LOOT_BAG_SERIAL = 1149201932 -- << SET YOUR LOOT BAG SERIAL ID HERE, or leave nil to use backpack
+local ITEMS_TO_LOOT = BuildLootList()
+local SEARCH_RANGE = 12 -- How far to look for corpses
+local GUMP_TIMEOUT = 2000 -- Milliseconds to wait for a gump
+local ACTION_DELAY = 600 -- Milliseconds to pause between actions
+local MAX_INTERACTION_DISTANCE = 2 -- Maximum distance to interact with a corpse
+
 -- Item Types Database
 local ItemTypes = {
     Shields = {
@@ -155,17 +163,8 @@ function BuildLootList()
     return lootList
 end
 
--- Configuration
-local LOOT_BAG_SERIAL = 1149201932 -- << SET YOUR LOOT BAG SERIAL ID HERE, or leave nil to use backpack
-local ITEMS_TO_LOOT = BuildLootList()
-local SEARCH_RANGE = 12 -- How far to look for corpses
-local GUMP_TIMEOUT = 2000 -- Milliseconds to wait for a gump
-local ACTION_DELAY = 600 -- Milliseconds to pause between actions
-local MAX_INTERACTION_DISTANCE = 2 -- Maximum distance to interact with a corpse
-
 -- Function to find the nearest corpse
 function FindNearestCorpse()
-    Messages.Print("Looking for corpses...")
     local corpseFilter = {
         name = "Corpse",
         rangemax = SEARCH_RANGE,
@@ -176,7 +175,6 @@ function FindNearestCorpse()
     local smallestDistance = -1
 
     if allFoundCorpses ~= nil and #allFoundCorpses > 0 then
-        Messages.Print("Found " .. #allFoundCorpses .. " object(s) named 'Corpse':")
         for i, corpse in ipairs(allFoundCorpses) do
             local dist = corpse.Distance
             if dist == nil then 
@@ -193,21 +191,17 @@ function FindNearestCorpse()
         end
 
         if nearestCorpse ~= nil then
-            Messages.Print("Found nearest corpse: " .. nearestCorpse.Serial .. " at distance " .. smallestDistance)
             return nearestCorpse
         else
-            Messages.Print("Could not determine a nearest corpse with a valid distance.")
             return nil
         end
     else
-        Messages.Print("No objects named 'Corpse' found at all.")
         return nil
     end
 end
 
 -- Function to loot items from an opened container (corpse)
 function LootContainer(containerSerial)
-    Messages.Print("Looting container: " .. containerSerial)
     local itemsLootedThisContainer = 0
 
     for _, itemToLoot in ipairs(ITEMS_TO_LOOT) do
@@ -217,7 +211,6 @@ function LootContainer(containerSerial)
         if foundItems ~= nil and #foundItems > 0 then
             for _, item in ipairs(foundItems) do
                 if item.RootContainer == containerSerial then
-                    Messages.Print("Found " .. itemToLoot.name .. " (x" .. item.Amount .. ", Serial: " .. item.Serial .. "). Attempting to pick up.")
                     Player.PickUp(item.Serial, item.Amount)
                     Pause(ACTION_DELAY / 2)
                     
@@ -231,27 +224,14 @@ function LootContainer(containerSerial)
                     
                     Pause(ACTION_DELAY / 2)
                     itemsLootedThisContainer = itemsLootedThisContainer + 1
-                    
-                    if droppedInBag then
-                        Messages.Print("Looted " .. itemToLoot.name .. " into loot bag.")
-                    else
-                        Messages.Print("Looted " .. itemToLoot.name .. " into backpack.")
-                    end
                 end
             end
         end
-    end
-
-    if itemsLootedThisContainer > 0 then
-        Messages.Print("Finished looting " .. itemsLootedThisContainer .. " item(s)/stack(s) from container " .. containerSerial)
-    else
-        Messages.Print("No items from the loot list found in container " .. containerSerial)
     end
 end
 
 -- Main function
 function Main()
-    Messages.Print("Autoloot script started.")
     Journal.Clear() -- Clear journal at the start of a cycle
     local corpse = FindNearestCorpse()
 
@@ -259,10 +239,10 @@ function Main()
         Player.UseObject(corpse.Serial)
         Pause(ACTION_DELAY)
         LootContainer(corpse.Serial)
-    else
-        Messages.Print("No corpse found to loot.")
     end
-    Messages.Print("Autoloot script finished one cycle.")
 end
 
-Main()
+while true do
+    Main()
+    Pause(1000)
+end
