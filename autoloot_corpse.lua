@@ -182,7 +182,6 @@ function FindNearestCorpse()
             if dist == nil then 
                 dist = "unknown (nil)"
             end
-            Messages.Print("  - Corpse [" .. i .. "]: Serial = " .. corpse.Serial .. ", Reported Distance = " .. dist)
             
             -- Attempt to find the truly nearest one
             if corpse.Distance ~= nil then -- Make sure distance is a valid number
