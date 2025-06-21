@@ -1,4 +1,4 @@
-local firstMob = 3631445
+local firstMob = Mobiles.FindByName('a frenzied ostard').Serial
 local secondMob = 3615922
 
 function ProvokeWithNewInstrument()
@@ -22,6 +22,12 @@ end
 function TargetSecondMob()
     Targeting.WaitForTarget(1000)
     Targeting.Target(secondMob)
+end
+
+function CheckJournalForAttacking()
+    if Journal.Contains('is attacking you!') then
+        Player.Say('Guards!')
+    end
 end
 
 function Main()

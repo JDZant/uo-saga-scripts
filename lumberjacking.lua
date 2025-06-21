@@ -27,7 +27,7 @@ function GetHatchet()
         end
     end
     if not axe then
-        Player.Say("No hatchet found.")
+        Messages.Print("No hatchet found.")
         return nil
     end
     return axe
@@ -46,18 +46,18 @@ end
 function CreateBoards(hatchet)
     local log = GetLogs()
     if hatchet and log then
-        Player.Say("Chopping boards!")
+        Messages.Print("Chopping boards!")
         Player.UseObject(hatchet.Serial)
         if Targeting.WaitForTarget(1000) then
             Targeting.Target(log.Serial)
             Pause(1000)
         else
-            Player.Say("Failed to target log for boards.")
+            Messages.Print("Failed to target log for boards.")
         end
     elseif not hatchet then
-        Player.Say("No hatchet to make boards.")
+        Messages.Print("No hatchet to make boards.")
     elseif not log then
-        Player.Say("No logs to make boards.")
+        Messages.Print("No logs to make boards.")
     end
 end
 
@@ -81,7 +81,7 @@ function CheckTreeStatus()
 end
 
 function ChopTree(hatchetSerial)
-    Player.Say("Chopping tree...")
+    Messages.Print("Chopping tree...")
     local treeIsEmpty = false
     while not treeIsEmpty and Player.Weight <= Player.MaxWeight - MAX_WEIGHT_DIFF do
         Player.UseObject(hatchetSerial)
@@ -91,7 +91,7 @@ function ChopTree(hatchetSerial)
         treeIsEmpty = CheckTreeStatus()
     end
     if Player.Weight > Player.MaxWeight - MAX_WEIGHT_DIFF then
-        Player.Say("Overweight!")
+        Messages.Print("Overweight!")
         return true
     end
     return false
@@ -104,15 +104,15 @@ function Main()
     while true do
         local hatchet = GetHatchet()  -- Get hatchet at the beginning of each loop
         if not hatchet then
-            Player.Say("Could not find/equip a hatchet. Stopping.")
+            Messages.Print("Could not find/equip a hatchet. Stopping.")
             return
         end
 
         if Player.Weight > MAX_WEIGHT - MAX_WEIGHT_DIFF then
-            Player.Say("This shit is getting heavy...")
+            Messages.Print("This shit is getting heavy...")
             CreateBoards(hatchet)
             if Player.Weight > MAX_WEIGHT - MAX_WEIGHT_DIFF then
-                Player.Say("Still too heavy, stopping.")
+                Messages.Print("Still too heavy, stopping.")
                 return
             end
             needNewTree = true
@@ -122,14 +122,14 @@ function Main()
 
         if Targeting.WaitForTarget(1000) then
             if needNewTree then
-                Player.Say("Select a tree")
+                Messages.Print("Select a tree")
                 needNewTree = false
                 Pause(2000)
             else
                 Targeting.TargetLast()
             end
         else
-            Player.Say("Targeting failed, trying again...")
+            Messages.Print("Targeting failed, trying again...")
             Pause(1000)
             goto continue_loop
         end
@@ -137,7 +137,7 @@ function Main()
         Pause(2000)
 
         if CheckTreeStatus() then
-            Player.Say("Need a new tree!")
+            Messages.Print("Need a new tree!")
             needNewTree = true
             Journal.Clear()
         end

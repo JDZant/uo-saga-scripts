@@ -44,7 +44,6 @@ end
 -- @return {string} 'GreaterHeal' if more than 10 HP is missing, otherwise 'Heal'.
 function GetHealingSpellString()
     if Player.HitsMax - Player.Hits <= 10 then
-        Messages.Print(Player.HitsMax - Player.Hits <= 10)
         return 'Heal'
     else
         return 'GreaterHeal'
