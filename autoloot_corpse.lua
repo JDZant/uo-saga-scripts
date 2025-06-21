@@ -119,6 +119,19 @@ local ItemTypes = {
         { ItemType = 0x13fd, Name = "HeavyXbow" },
         { ItemType = 0x0f50, Name = "Xbow" },
         { ItemType = 0x13b2, Name = "bow" }
+    },
+    Reagents = {
+        { ItemType = 0x0f7a, Name = "Black Pearl" },
+        { ItemType = 0x0f7b, Name = "Blood Moss" },
+        { ItemType = 0x0f86, Name = "Mandrake Root" },
+        { ItemType = 0x0f84, Name = "Garlic" },
+        { ItemType = 0x0f85, Name = "Ginseng" },
+        { ItemType = 0x0f88, Name = "Nightshade" },
+        { ItemType = 0x0f8d, Name = "Spider's Silk" },
+        { ItemType = 0x0f8c, Name = "Sulphurous Ash" }
+    },
+    Supplies = {
+        { ItemType = 0x0e21, Name = "Bandage" }
     }
 }
 
@@ -129,7 +142,7 @@ function BuildLootList()
     }
     local categories = {
         "Shields", "BoneArmor", "Platemail", "Chainmail", "Ringmail", "Studded", "Leather", "FemaleArmor",
-        "Fencing", "Macing", "Swords", "Axes", "Bows"
+        "Fencing", "Macing", "Swords", "Axes", "Bows", "Reagents", "Supplies"
     }
     for _, categoryName in ipairs(categories) do
         local category = ItemTypes[categoryName]
@@ -143,6 +156,7 @@ function BuildLootList()
 end
 
 -- Configuration
+local LOOT_BAG_SERIAL = 1149201932 -- << SET YOUR LOOT BAG SERIAL ID HERE, or leave nil to use backpack
 local ITEMS_TO_LOOT = BuildLootList()
 local SEARCH_RANGE = 12 -- How far to look for corpses
 local GUMP_TIMEOUT = 2000 -- Milliseconds to wait for a gump
@@ -207,10 +221,23 @@ function LootContainer(containerSerial)
                     Messages.Print("Found " .. itemToLoot.name .. " (x" .. item.Amount .. ", Serial: " .. item.Serial .. "). Attempting to pick up.")
                     Player.PickUp(item.Serial, item.Amount)
                     Pause(ACTION_DELAY / 2)
-                    Player.DropInBackpack()
+                    
+                    local droppedInBag = false
+                    if LOOT_BAG_SERIAL ~= nil then
+                        Player.DropInContainer(LOOT_BAG_SERIAL)
+                        droppedInBag = true
+                    else
+                        Player.DropInBackpack()
+                    end
+                    
                     Pause(ACTION_DELAY / 2)
                     itemsLootedThisContainer = itemsLootedThisContainer + 1
-                    Messages.Print("Looted " .. itemToLoot.name .. " into backpack.")
+                    
+                    if droppedInBag then
+                        Messages.Print("Looted " .. itemToLoot.name .. " into loot bag.")
+                    else
+                        Messages.Print("Looted " .. itemToLoot.name .. " into backpack.")
+                    end
                 end
             end
         end
